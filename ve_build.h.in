@@ -1,0 +1,13 @@
+/*
+ * Copyright 2017 Alexander Dahl <post@lespocky.de>
+ *
+ * SPDX-License-Identifier: 0BSD
+ * License-Filename: LICENSE
+ */
+
+#ifndef VE_BUILD_H
+#define VE_BUILD_H
+
+#define VE_AGENTX_MASTER_SOCKET		"@VE_AGENTX_MASTER_SOCKET@"
+
+#endif /* VE_BUILD_H */
