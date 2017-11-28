@@ -8,18 +8,16 @@
 #ifndef VE_DATA_H
 #define VE_DATA_H
 
-#include <stdint.h>
+const long *ve_get_nstAgentModuleObject( void );
 
-const int32_t *ve_get_nstAgentModuleObject( void );
+const long *ve_get_nstAgentSubagentObject( void );
 
-const int32_t *ve_get_nstAgentSubagentObject( void );
+const long *ve_get_nstAgentPluginObject( void );
 
-const int32_t *ve_get_nstAgentPluginObject( void );
+void ve_set_nstAgentModuleObject( long val );
 
-void ve_set_nstAgentModuleObject( int32_t val );
+void ve_set_nstAgentSubagentObject( long val );
 
-void ve_set_nstAgentSubagentObject( int32_t val );
-
-void ve_set_nstAgentPluginObject( int32_t val );
+void ve_set_nstAgentPluginObject( long val );
 
 #endif /* VE_DATA_H */

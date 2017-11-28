@@ -7,38 +7,36 @@
 
 #include "ve_data.h"
 
-#include <stdint.h>
+static long nstAgentModuleObject = 1;
+static long nstAgentSubagentObject = 2;
+static long nstAgentPluginObject = 3;
 
-static int32_t nstAgentModuleObject = 0;
-static int32_t nstAgentSubagentObject = 0;
-static int32_t nstAgentPluginObject = 0;
-
-const int32_t *ve_get_nstAgentModuleObject( void )
+const long *ve_get_nstAgentModuleObject( void )
 {
 	return &nstAgentModuleObject;
 }
 
-const int32_t *ve_get_nstAgentSubagentObject( void )
+const long *ve_get_nstAgentSubagentObject( void )
 {
 	return &nstAgentSubagentObject;
 }
 
-const int32_t *ve_get_nstAgentPluginObject( void )
+const long *ve_get_nstAgentPluginObject( void )
 {
 	return &nstAgentPluginObject;
 }
 
-void ve_set_nstAgentModuleObject( int32_t val )
+void ve_set_nstAgentModuleObject( long val )
 {
 	nstAgentModuleObject = val;
 }
 
-void ve_set_nstAgentSubagentObject( int32_t val )
+void ve_set_nstAgentSubagentObject( long val )
 {
 	nstAgentSubagentObject = val;
 }
 
-void ve_set_nstAgentPluginObject( int32_t val )
+void ve_set_nstAgentPluginObject( long val )
 {
 	nstAgentPluginObject = val;
 }

@@ -148,7 +148,7 @@ handle_nstAgentSubagentObject(netsnmp_mib_handler *handler,
          */
     case MODE_SET_RESERVE1:
         ret = netsnmp_check_vb_type_and_size(requests->requestvb,
-											 ASN_INTEGER, sizeof(int32_t));
+											 ASN_INTEGER, sizeof(long));
         if (ret != SNMP_ERR_NOERROR) {
             netsnmp_set_request_error(reqinfo, requests, ret);
         }
