@@ -30,6 +30,9 @@ int main( void )
 						  NETSNMP_DS_AGENT_X_SOCKET,
 						  VE_AGENTX_MASTER_SOCKET);
 
+	snmp_disable_log();
+	snmp_enable_stderrlog();
+
 	init_agent( VE_APP );
 
 	init_nstMIBObjects();
