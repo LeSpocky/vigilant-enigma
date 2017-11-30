@@ -5,6 +5,7 @@
  * License-Filename: LICENSE
  */
 
+#include <assert.h>
 #include <signal.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -18,6 +19,26 @@
 
 #define VE_APP						"nstMIBObjects"
 
+/**
+ *	This has the standard signature for a SNMPCallback.
+ *
+ *	@param[in]	major_id	Same as when registered with snmp_register_callback(),
+ *							should be SNMP_CALLBACK_LIBRARY.
+ *	@param[in]	minor_id	Same as when registered with snmp_register_callback(),
+ *							should be SNMP_CALLBACK_LOGGING.
+ *	@param[in]	serverarg	Pointer to `struct snmp_log_message`.
+ *	@param[in]	clientarg	Same as when registered with snmp_register_callback(),
+ *							probably NULL?
+ *
+ *	@return	net-snmp does not care, what we return here.
+ */
+static int ve_log_callback(
+		int		major_id,
+		int		minor_id,
+		void	*serverarg,
+		void	*clientarg
+);
+
 static void ve_sigint_handler( int sig );
 static void ve_sigterm_handler( int sig );
 
@@ -30,8 +51,21 @@ int main( void )
 						  NETSNMP_DS_AGENT_X_SOCKET,
 						  VE_AGENTX_MASTER_SOCKET);
 
+	/*
+	 *	Register our own log function.
+	 *
+	 *	NOTE	For debug log level, you must create a config file
+	 *			nstMIBObjects.conf with the following content:
+	 *
+	 *		[snmp]
+	 *		doDebugging 1
+	 */
 	snmp_disable_log();
-	snmp_enable_stderrlog();
+	snmp_enable_calllog();
+	snmp_register_callback(SNMP_CALLBACK_LIBRARY,
+						   SNMP_CALLBACK_LOGGING,
+						   ve_log_callback,
+						   NULL);
 
 	init_agent( VE_APP );
 
@@ -51,6 +85,23 @@ int main( void )
 	shutdown_agent();
 
 	return EXIT_SUCCESS;
+}
+
+int ve_log_callback(
+		int		major_id,
+		int		minor_id,
+		void	*serverarg,
+		void	*clientarg )
+{
+	struct snmp_log_message *slm = (struct snmp_log_message *) serverarg;
+
+	assert( serverarg );
+	assert( major_id == SNMP_CALLBACK_LIBRARY );
+	assert( minor_id == SNMP_CALLBACK_LOGGING );
+
+	fprintf( stderr, "%i: %s\n", slm->priority, slm->msg );
+
+	return SNMP_ERR_NOERROR;
 }
 
 void ve_sigint_handler( int sig )
