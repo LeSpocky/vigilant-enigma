@@ -44,6 +44,17 @@ static void ve_sigterm_handler( int sig );
 
 static bool ve_running;
 
+static const char log_lvl_letter[] = {
+	'G',	/*	LOG_EMERG	*/
+	'A',	/*	LOG_ALERT	*/
+	'C',	/*	LOG_CRIT	*/
+	'E',	/*	LOG_ERR		*/
+	'W',	/*	LOG_WARNING	*/
+	'N',	/*	LOG_NOTICE	*/
+	'I',	/*	LOG_INFO	*/
+	'D'		/*	LOG_DEBUG	*/
+};
+
 int main( void )
 {
 	netsnmp_enable_subagent();
@@ -95,11 +106,12 @@ int ve_log_callback(
 {
 	struct snmp_log_message *slm = (struct snmp_log_message *) serverarg;
 
-	assert( serverarg );
 	assert( major_id == SNMP_CALLBACK_LIBRARY );
 	assert( minor_id == SNMP_CALLBACK_LOGGING );
+	assert( slm );
+	assert( slm->priority >= LOG_EMERG && slm->priority <= LOG_DEBUG );
 
-	fprintf( stderr, "%i: %s\n", slm->priority, slm->msg );
+	fprintf( stderr, "-%c- %s\n", log_lvl_letter[slm->priority], slm->msg );
 
 	return SNMP_ERR_NOERROR;
 }
