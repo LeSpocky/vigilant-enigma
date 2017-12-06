@@ -2,7 +2,7 @@
  * Copyright 2017 Alexander Dahl <post@lespocky.de>
  *
  * SPDX-License-Identifier: 0BSD
- * License-Filename: LICENSE
+ * License-Filename: LICENSES/0BSD.txt
  */
 
 #ifndef VE_BUILD_H

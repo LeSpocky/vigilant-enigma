@@ -2,7 +2,7 @@
 # Copyright 2017 Alexander Dahl <post@lespocky.de>
 #
 # SPDX-License-Identifier: 0BSD
-# License-Filename: LICENSE
+# License-Filename: LICENSES/0BSD.txt
 #
 
 cmake_minimum_required(VERSION 3.0)
